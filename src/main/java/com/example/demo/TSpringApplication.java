@@ -17,14 +17,6 @@ public class TSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TSpringApplication.class, args);
 	}
-//	Get Restful Endpoint
-	@GetMapping
-	public List<Student> hello(){
-		List<Student> l1 = new ArrayList<Student>();
-		Student s = new Student(1L,"Marian","marian@gmail.com",21,LocalDate.of(2003, Month.JANUARY, 5));
-		l1.add(s);
-		return l1;
-	}
 
 
 }
