@@ -1,12 +1,12 @@
 package com.example.demo.student;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
 @Table
 public class Student {
+
     @Id
     @SequenceGenerator(
             name="student_sequence",
@@ -18,15 +18,20 @@ public class Student {
             generator = "student_sequence"
     )
     private Long id;
+
     private String name;
     private String email;
     private Integer age;
     private LocalDate dob;
 
-//    Null Constructor:
-    public Student(long id, String marian, int i, LocalDate of, String s) {
-    }
-//    Constructor with Everything:
+    // Optimistic Locking: Version field
+    @Version
+    private Integer version;  // This field is used by Hibernate for optimistic locking
+
+    // Default no-argument constructor
+    public Student() {}
+
+    // Constructor with everything
     public Student(Long id, String name, String email, Integer age, LocalDate dob) {
         this.id = id;
         this.name = name;
@@ -35,6 +40,7 @@ public class Student {
         this.dob = dob;
     }
 
+    // Constructor without ID (for creating new students)
     public Student(String name, String email, Integer age, LocalDate dob) {
         this.name = name;
         this.email = email;
@@ -42,7 +48,7 @@ public class Student {
         this.dob = dob;
     }
 
-//    Getters and Setters:
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -83,8 +89,13 @@ public class Student {
         this.dob = dob;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
 
-//    ToString:
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
     @Override
     public String toString() {
@@ -94,8 +105,7 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", dob=" + dob +
+                ", version=" + version +  // Include version in toString
                 '}';
     }
 }
-
-
